@@ -1,0 +1,49 @@
+﻿@model ML.CatalogoDepartamentos
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Catalogo de Departamentos</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <h5>Seleccione un Departamento para editarlo o  para agregar...</h5>
+    </div>
+</div>
+
+<div style="float:right;">
+    @Html.ActionLink("Agregar Departamento", "Form", "Departamento", htmlAttributes: new {@class = "btn btn-success"})
+</div>
+
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <td>Editar</td>
+
+            <td>ClaveDepartamento</td>
+            <td>Descripcion</td>
+
+
+            <td>Eliminar</td>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (ML.CatalogoDepartamentos catalogoDepartamentos in Model.Departamento)
+        {
+            <tr>
+                <td><a class="btn btn-warning bi bi-pencil-square" href="@Url.Action("Form", "Departamento", new { ClaveEmpleado = catalogoDepartamentos.ClaveDepartamento })"></a></td>
+
+                <td>@catalogoDepartamentos.ClaveDepartamento</td>
+                <td>@catalogoDepartamentos.Descripcion</td>
+
+                <td>
+                    <a class="btn btn-danger bi bi-trash2" href="@Url.Action("Delete", "Departamento", new {ClaveEmpleado = catalogoDepartamentos.ClaveDepartamento })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');">   </a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>

@@ -1,0 +1,49 @@
+﻿@model ML.CatalogoDepartamentos
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Departamento</h2>
+<div class="row">
+    <div class="container">
+        <div class="col-md-12">
+           
+            <h5>Ingrese los datos:</h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Form", "CatalogoDepartamento", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ClaveDepartamento)
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        @Html.TextBoxFor(model => model.ClaveDepartamento, new { @class = "form-control", @id = "txtClaveDepartamento"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Descripcion)
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        @Html.TextBoxFor(model => model.Descripcion, new { @class = "form-control", @id = "txtDescripcion"})
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                    @Html.ActionLink("Regresar", "GetAll", "CatalogoDepartamento", null, new { @class = "btn btn-danger" })
+                </div>
+            }
+            </div>
+        </div>
+    </div>
