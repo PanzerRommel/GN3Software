@@ -1,0 +1,52 @@
+﻿@model ML.Empleados
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Empleados</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <h5>Seleccione un Empleado para editarlo o  para agregar...</h5>
+    </div>
+</div>
+
+<div style="float:right;">
+    @Html.ActionLink("Agregar Empleado", "Form", "Empleado", htmlAttributes: new {@class = "btn btn-success"})   
+</div>
+
+
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <td>Editar</td>
+            <td class="visually-hidden">ClaveEmpleado</td>
+            <td>Nombre</td>
+            <td>Fecha de Ingreso</td>
+            <td>Fecha de Nacimiento</td>
+            <td>Departamento</td>
+            <td>Eliminar</td>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (ML.Empleados empleados in Model.Empleadoos)
+        {
+            <tr>
+                <td><a class="btn btn-warning bi bi-pencil-square" href="@Url.Action("Form", "Empleado", new { ClaveEmpleado = empleados.ClaveEmpleado })"></a></td>
+
+                <td class="visually-hidden">@empleados.ClaveEmpleado</td>
+                <td>@empleados.NombreEmpleado</td>
+                <td>@empleados.FechaIngreso</td>
+                <td>@empleados.FechaNacimiento</td>
+                <td>@empleados.Departamento</td>
+                <td>
+                    <a class="btn btn-danger bi bi-trash2" href="@Url.Action("Delete", "Empleado", new {ClaveEmpleado = empleados.ClaveEmpleado })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');">   </a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>

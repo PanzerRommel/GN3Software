@@ -1,0 +1,95 @@
+﻿@model ML.Empleados
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Form</h2>
+<div class="row">
+    <div class="container">
+        <div class="col-md-12">
+            <h2>Empleado</h2>
+            <h5>Ingrese los datos del Empleado:</h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Form", "Empleados", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form-group">
+                    @Html.HiddenFor(model => model.ClaveEmpleado)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NombreEmpleado)
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        @Html.TextBoxFor(model => model.NombreEmpleado, new { @class = "form-control", @id = "txtNombre"})
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-12 col-sm-6">
+                    @Html.LabelFor(model => model.FechaIngreso)
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon"><i class="bi bi-calendar2-week"></i></span>
+                        @Html.TextBoxFor(model => model.FechaIngreso, new { @class = "form-control", @id = "txtFechaIngreso", placeholder = "AA-MM-DD" })
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-12 col-sm-6">
+                    @Html.LabelFor(model => model.FechaNacimiento)
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon"><i class="bi bi-calendar2-week"></i></span>
+                        @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", @id = "txtFechaNacimiento", placeholder = "AAAA-MM-DD" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Departamento)
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        @Html.TextBoxFor(model => model.Departamento, new { @class = "form-control", @id = "txtDepartamento" })
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                    @Html.ActionLink("Regresar", "GetAll", "Empleados", null, new { @class = "btn btn-danger" })
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts
+    {
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+        // DatePicker
+        var j = jQuery.noConflict();
+        j(function () {
+            j("#txtFechaNacimiento, #txtFechaIngreso").datepicker({
+                dateFormat: 'yy-mm-dd', // Formato de fecha con guiones
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "c-100:c", // Esto permitirá fechas desde 100 años atrás hasta el año actual
+            });
+            $(".ui-datepicker-trigger").css("width", "30px");
+            $(".ui-datepicker-trigger").css("height", "30px");
+        });
+    </script>
+
+}
