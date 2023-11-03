@@ -75,7 +75,7 @@ namespace PL_MVC.Controllers
                 }
                 return PartialView("Modal");
             }
-
+             
             return View(departamento);
         }
 
