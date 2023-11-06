@@ -13,7 +13,7 @@
 </div>
 
 <div style="float:right;">
-    @Html.ActionLink("Agregar Empleado", "Form", "Empleado", htmlAttributes: new {@class = "btn btn-success"})   
+    @Html.ActionLink("Agregar Empleado", "Form", "Empleados", htmlAttributes: new {@class = "btn btn-success"})   
 </div>
 
 
@@ -34,7 +34,7 @@
         @foreach (ML.Empleados empleados in Model.Empleadoos)
         {
             <tr>
-                <td><a class="btn btn-warning bi bi-pencil-square" href="@Url.Action("Form", "Empleado", new { ClaveEmpleado = empleados.ClaveEmpleado })"></a></td>
+                <td><a class="btn btn-warning bi bi-pencil-square" href="@Url.Action("Form", "Empleados", new { ClaveEmpleado = empleados.ClaveEmpleado })"></a></td>
 
                 <td class="visually-hidden">@empleados.ClaveEmpleado</td>
                 <td>@empleados.NombreEmpleado</td>
@@ -42,8 +42,11 @@
                 <td>@empleados.FechaNacimiento</td>
                 <td>@empleados.Departamento</td>
                 <td>
-                    <a class="btn btn-danger bi bi-trash2" href="@Url.Action("Delete", "Empleado", new {ClaveEmpleado = empleados.ClaveEmpleado })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');">   </a>
+                    <form method="post" action="@Url.Action("Delete", "Empleados", new { id = empleados.ClaveEmpleado })" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este registro?');">
+                        <button type="submit" class="btn btn-danger bi bi-trash2"></button>
+                    </form>
                 </td>
+
             </tr>
         }
 

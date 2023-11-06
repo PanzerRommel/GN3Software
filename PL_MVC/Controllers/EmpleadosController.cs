@@ -73,23 +73,20 @@ namespace PL_MVC.Controllers
             }
             return View(empleados);
         }
-
-        public ActionResult Delete(ML.Empleados empleados)
+        public ActionResult Delete(int ClaveEmpleado)
         {
             ML.Result result = new ML.Result();
-            result = BL.Empleados.Delete(empleados);
+            result = BL.Empleados.Delete(ClaveEmpleado);
 
             if (result.Correct)
             {
                 ViewBag.Mensaje = "Registro Eliminado Con Exitoso";
-                return PartialView("Modal");
             }
             else
             {
                 ViewBag.Mensaje = "Se A Producido Un Error" + result.ErrorMessage;
-                return PartialView("Modal");
             }
-            return View(empleados);
+            return PartialView("Modal");
         }
     }
 }

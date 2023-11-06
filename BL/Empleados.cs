@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DL;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using System;
 using System.Collections.Generic;
@@ -86,25 +87,27 @@ namespace BL
             }
             return result;
         }
-        public static ML.Result Delete(ML.Empleados empleados)
+        public static ML.Result Delete(int ClaveEmpleado)
         {
             ML.Result result = new ML.Result();
+
             try
             {
-                using (DL.FlunaGn3Context context = new DL.FlunaGn3Context())
+                using (FlunaGn3Context context = new FlunaGn3Context())
                 {
-                    var query = context.Database.ExecuteSqlRaw($"EmpleadoDelete {empleados.ClaveEmpleado}");
-                    if (query >= 1)
+                    var existingEmpleado = context.Empleados.FirstOrDefault(e => e.ClaveEmpleado == ClaveEmpleado);
+
+                    if (existingEmpleado != null)
                     {
+                        context.Empleados.Remove(existingEmpleado);
+                        context.SaveChanges();
                         result.Correct = true;
                     }
                     else
                     {
                         result.Correct = false;
-                        result.ErrorMessage = "Error al Eliminar Registro";
+                        result.ErrorMessage = "No se encontró el empleado para eliminar.";
                     }
-                    result.Correct = true;
-
                 }
             }
             catch (Exception ex)
@@ -112,6 +115,7 @@ namespace BL
                 result.Correct = false;
                 result.ErrorMessage = ex.Message;
             }
+
             return result;
         }
         public static ML.Result Add(ML.Empleados empleados)
@@ -147,9 +151,17 @@ namespace BL
             ML.Result result = new ML.Result();
             try
             {
-                using(DL.FlunaGn3Context context = new DL.FlunaGn3Context())
+                using (DL.FlunaGn3Context context = new DL.FlunaGn3Context())
                 {
-                    var query = context.Database.ExecuteSqlRaw($"EmpleadoUpdate {empleados.ClaveEmpleado} , '{empleados.NombreEmpleado}' , '{empleados.FechaIngreso}' , '{empleados.FechaNacimiento}' , '{empleados.Departamento}'");
+                    var query = context.Database.ExecuteSqlRaw(
+                        "EXEC EmpleadoUpdate {0}, {1}, {2}, {3}, {4}",
+                        empleados.ClaveEmpleado,
+                        empleados.NombreEmpleado,
+                        empleados.FechaIngreso,
+                        empleados.FechaNacimiento,
+                        empleados.Departamento
+                    );
+
                     if (query >= 1)
                     {
                         result.Correct = true;
@@ -157,10 +169,8 @@ namespace BL
                     else
                     {
                         result.Correct = false;
-                        result.ErrorMessage = "No se inserto el registro";
-
+                        result.ErrorMessage = "No se insertó el registro";
                     }
-                    result.Correct = true;
                 }
             }
             catch (Exception ex)
@@ -170,5 +180,6 @@ namespace BL
             }
             return result;
         }
+
     }
 }
